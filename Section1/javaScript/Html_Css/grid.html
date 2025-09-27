@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+
+        .parent{
+            display: grid;
+
+            /* grid-template-columns: 200px 300px 150px 400px; */
+            /* grid-template-columns: repeat(6, 1fr); */
+            grid-template-columns: 1fr 3fr 2fr;
+        }
+
+        .child{
+            background-color: lightcoral;
+            color: darkred;
+            font-size: 40px;
+            padding: 30px;
+            border: 2px solid darkred;
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <div class="parent">
+        <div class="child">Child 1</div>
+        <div class="child">Child 2</div>
+        <div class="child">Child 3</div>
+        <div class="child">Child 4</div>
+        <div class="child">Child 5</div>
+        <div class="child">Child 6</div>
+        <div class="child">Child 7</div>
+        <div class="child">Child 8</div>
+        <div class="child">Child 9</div>
+        <div class="child">Child 10</div>
+        <div class="child">Child 11</div>
+        <div class="child">Child 12</div>
+    </div>
+
+</body>
+</html>

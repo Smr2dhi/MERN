@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using CSS</title>
+
+    <style>
+        h2{
+            color: blue;
+            font-size: 30px;
+            text-decoration: underline;
+        }
+
+        .mytag{
+            color: blueviolet;
+            background-color: yellow;
+            text-align: center;
+            font-size: 50px;
+        }
+
+        #myid{
+            border: 1px solid red;
+            color: red;
+            font-size: 40px;
+        }
+
+        button{
+            background-color: black !important;
+            padding: 10px;
+            border: none;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .mybtn{
+            background-color: blue;
+        }
+
+        #submit-btn{
+            background-color: red;
+        }
+
+        .mybtn2{
+            background-color: green;
+        }
+
+    </style>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+    <h1 style="color: red; font-size: 50px;">Inline CSS is used to style individual tags only</h1>
+
+    <h2>Internal CSS is used to style entire page at once</h2>
+
+    <h2 class="mytag">Name Selector is used to select elements by their tag name</h2>
+
+    <p class="mytag">Class Selector is used to select elements by their class name</p>
+
+    <h3 id="myid">Id Selector is used to select elements by their id name</h3>
+
+    <button class="mybtn mybtn2" id="submit-btn" style="background-color: blueviolet;">Submit</button>
+
+    <input class="text-input" type="text">
+
+</body>
+</html>

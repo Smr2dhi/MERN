@@ -15,7 +15,10 @@ const authorise = (req,res,next)=>{
 				console.log(err);
 				res.status(500).json(err);
 			}
-
+			else{
+				req.user=data;
+				next();
+			}
 
 	})
 }

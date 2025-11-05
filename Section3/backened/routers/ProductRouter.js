@@ -1,8 +1,17 @@
 const express = require('express');
+const Model =require('../models/ProductModel')
 
 const router = express();
- router.get('/add',(req,res)=>{
-	res.send('add from the product router');
+ router.post('/add',(req,res)=>{
+	console.log(req.body);
+		new Model(req.body).save()
+		.then((result)=>{
+			res.status(200).json(result);
+		}).catch((err)=>{
+			console.log(err);
+			res.status(500).json(err);
+			
+		});
  });
 
  router.get('/add',(req,res)=>{
@@ -10,19 +19,52 @@ const router = express();
 })
 
 //getall
-router.get('/getall',(req,res)=>{
-	res.send('getall from the product')
+router.get('/getall/',(req,res)=>{
+	Model.find(req.params.id)
+	.then((result) => {
+		res.status(200).json(result)
+		
+	}).catch((err) => {
+		console.log(err);
+		res.status(500).json(result)
+		
+	});
 })
 //getid
-router.get('/getid',(req,res)=>{
-	res.send('getid from the product')
+router.get('/getid/:id',(req,res)=>{
+	Model.findById(req.params.id)
+	.then((result) => {
+		res.status(200).json(result)
+		
+	}).catch((err) => {
+		console.log(err);
+		res.status(500).json(result)
+		
+	});
 })
 //delete
-router.get('/delete',(req,res)=>{
-	res.send('Delete item from the product')
+router.delete('/delete/:id',(req,res)=>{
+	
+	Model.findById(req.params.id)
+	.then((result) => {
+		res.status(200).json(result)
+		
+	}).catch((err) => {
+		console.log(err);
+		res.status(500).json(result)
+		
+	});
 })
 //update
-router.get('/update',(req,res)=>{
-	res.send('updated from the product')
+router.put('/update/:id',(req,res)=>{
+	Model.findById(req.params.id)
+	.then((result) => {
+		res.status(200).json(result)
+		
+	}).catch((err) => {
+		console.log(err);
+		res.status(500).json(result)
+		
+	});
 })
  module.exports =router;

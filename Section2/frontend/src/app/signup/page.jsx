@@ -1,7 +1,12 @@
 'use client';
+import axios from 'axios';
 import { useFormik } from 'formik';
 import React from 'react';
+import toast from 'react-hot-toast';
 import * as Yup from 'yup';
+import { TailChase } from 'ldrs/react'
+import 'ldrs/react/TailChase.css'
+
 
 const SignupSchema = Yup.object().shape({
   name: Yup.string()
@@ -9,14 +14,13 @@ const SignupSchema = Yup.object().shape({
     .max(50, 'Too Long!')
     .required('Naam nhi hai kya?'),
   email: Yup.string().email('Invalid email').required('Required'),
-  password:Yup.string().required('Password is required').min(6,'min 6 characters')
-  .matches(/[A-Z]/, 'uppercase letter is required')
-  .matches(/[a-z]/, 'lowecase letter is required')
-  .matches(/[A-Z]/, 'number is required')
-  .matches(/[@$!%*#?&]/, 'uppercase letter is required'),
-
-  confirmPassword: Yup.string().required('confirm your password')
-  .oneOf([Yup.ref('password'),null], 'Password must matach')
+  password: Yup.string().required('Password is required').min(6, 'min 6 characters')
+    .matches(/[A-Z]/, 'uppercase letter is required')
+    .matches(/[a-z]/, 'lowercase letter is required')
+    .matches(/[0-9]/, 'number is required')
+    .matches(/[@$!%*#?&]/, 'special character is required'),
+  confirmPassword: Yup.string().required('Confirm your password')
+    .oneOf([Yup.ref('password'), null], 'Passwords must match')
 });
 
 const Signup = () => {
@@ -28,10 +32,20 @@ const Signup = () => {
       password: '',
       confirmPassword: ''
     },
-    onSubmit: (values) => {
+    onSubmit: (values, { resetForm, setSubmitting }) => {
       console.log(values);
 
       // send values to backend
+      axios.post('http://localhost:5000/user/add', values)
+        .then((result) => {
+          toast.success('Account created successfully');
+          resetForm();
+        }).catch((err) => {
+          console.log(err);
+          toast.error('Some error occured');
+          setSubmitting(false);
+        });
+
     },
 
     validationSchema: SignupSchema
@@ -85,10 +99,10 @@ const Signup = () => {
 
                   {
                     (signupForm.touched.name && signupForm.errors.name) && (
-
-                   
-                  <p className="text-xs text-red-600 mt-2" id="email-error"> {signupForm.errors.name}</p>
-                   )
+                      <p className="text-xs text-red-600 mt-2" id="email-error">
+                        {signupForm.errors.name}
+                      </p>
+                    )
                   }
 
                 </div>
@@ -109,14 +123,14 @@ const Signup = () => {
                       </svg>
                     </div>
                   </div>
-
                   {
                     (signupForm.touched.email && signupForm.errors.email) && (
-
-                   
-                  <p className="text-xs text-red-600 mt-2" id="email-error"> {signupForm.errors.name}</p>
-                   )
-                  }                </div>
+                      <p className="text-xs text-red-600 mt-2" id="email-error">
+                        {signupForm.errors.email}
+                      </p>
+                    )
+                  }
+                </div>
                 {/* End Form Group */}
 
                 {/* Form Group */}
@@ -134,12 +148,14 @@ const Signup = () => {
                       </svg>
                     </div>
                   </div>
-
                   {
                     (signupForm.touched.password && signupForm.errors.password) && (
-                  <p className="text-xs text-red-600 mt-2" id="email-error"> {signupForm.errors.password}</p>
-                   )
-                  }                </div>
+                      <p className="text-xs text-red-600 mt-2" id="email-error">
+                        {signupForm.errors.password}
+                      </p>
+                    )
+                  }
+                </div>
                 {/* End Form Group */}
 
                 {/* Form Group */}
@@ -157,12 +173,14 @@ const Signup = () => {
                       </svg>
                     </div>
                   </div>
-
                   {
                     (signupForm.touched.confirmPassword && signupForm.errors.confirmPassword) && (
-                  <p className="text-xs text-red-600 mt-2" id="email-error"> {signupForm.errors.confirmPassword}</p>
-                   )
-                  }                </div>
+                      <p className="text-xs text-red-600 mt-2" id="email-error">
+                        {signupForm.errors.confirmPassword}
+                      </p>
+                    )
+                  }
+                </div>
                 {/* End Form Group */}
 
                 {/* Checkbox */}
@@ -176,7 +194,20 @@ const Signup = () => {
                 </div>
                 {/* End Checkbox */}
 
-                <button type="submit" className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">Sign up</button>
+                <button disabled={signupForm.isSubmitting} type="submit" className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+                  {
+                    signupForm.isSubmitting ? (
+                      <TailChase
+                        size="40"
+                        speed="1.75"
+                        color="white"
+                      />
+                    ) : (
+                      'Submit Form'
+                    )
+                  }
+
+                </button>
               </div>
             </form>
             {/* End Form */}

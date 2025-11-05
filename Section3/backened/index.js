@@ -1,12 +1,17 @@
 const express = require("express");
 const userRouter = require('./routers/userRouter');
 const ProductRouter  = require('./routers/ProductRouter');
+const cors = require('cors');
 
 const app = express();
 
 const port = 5000;
 
 //middleware
+app.use(cors({
+  origin: ['http://localhost:3000']
+}))
+app.use(express.json());
 app.use('/user',userRouter);
 app.use('/product',ProductRouter);
 
@@ -27,8 +32,9 @@ app.get('/getall',(req,res)=>{
 app.get('/delete',(req,res)=>{
   res.send('response from delete route')
 })
-
-
+app.get('/getbycity',(req,res)=>{
+  res.send('response form the city')
+})
 
 app.listen(port, () => {
   console.log("express server started ");
